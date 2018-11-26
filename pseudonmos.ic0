@@ -1,0 +1,24 @@
+* "simulator" "HSPICE" 
+* "version" "A-2008.03 32-BIT"
+* "format" "HSP"
+* "rundate" "02:01:29 11/25/2018 "
+* "netlist" "\\mac\home\desktop\malikeh\ut-courses\digital_elec\ca3\pseudonmos.sp "
+* "runtitle" "******** digital electronics, multiplexer design*******"
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ va =   1.0000        
++ vs =   1.0000        
++ vx =   1.0000        
++ xb = 101.8525m       
++ y1 = 997.3041m       
++ y2 = 101.8607m       
++ z = 999.7620m       
++ xand1.k = 201.4083m       
++ xand1.s =  96.4916m       
++ xand2.k = 999.8791m       
++ xand2.s = 811.3984m       
+***   END: Saved Operating Point ***                     

@@ -1,0 +1,24 @@
+* "simulator" "HSPICE" 
+* "version" "A-2008.03 32-BIT"
+* "format" "HSP"
+* "rundate" "14:03:21 11/24/2018 "
+* "netlist" "\\mac\home\desktop\malikeh\ut-courses\digital_elec\ca3\zahremar.sp "
+* "runtitle" "* 2-to-1 decoder - cmos logic *"
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ 1 =   1.0000        
++ 2 =   1.0000        
++ 3 =   1.0000        
++ 4 =   3.6673u       
++ 5 = 999.9960m       
++ 6 = 999.9964m       
++ 7 =   2.2468u       
++ x3.aout =   5.0405u       
++ x3.mid =   2.5605u       
++ x4.aout = 999.9918m       
++ x4.mid =   4.2404u       
+***   END: Saved Operating Point ***                     

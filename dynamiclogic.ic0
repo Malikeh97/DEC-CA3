@@ -1,0 +1,31 @@
+* "simulator" "HSPICE" 
+* "version" "A-2008.03 32-BIT"
+* "format" "HSP"
+* "rundate" "02:41:56 11/25/2018 "
+* "netlist" "\\mac\home\desktop\malikeh\ut-courses\digital_elec\ca3\dynamiclogic.sp "
+* "runtitle" "******** digital electronics, multiplexer design*******"
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ _clk =   1.0000        
++ va =   1.0000        
++ vs =   1.0000        
++ vx =   1.0000        
++ xb =   4.5688u       
++ y1 =   4.3281u       
++ y2 =   4.6848u       
++ z = 372.1037m       
++ xinv1.d =   2.3213u       
++ xinv2.d = 405.2784n       
++ xand1.d =   2.1058u       
++ xand1.j = 274.9480n       
++ xand1.s = 476.1941n       
++ xand1.z = 870.6502m       
++ xand2.d =   2.2774u       
++ xand2.j = 102.8625n       
++ xand2.s = 132.0229n       
++ xand2.z = 870.6524m       
+***   END: Saved Operating Point ***                     

@@ -1,0 +1,273 @@
+ ****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+  Copyright (C) 2008 Synopsys, Inc. All Rights Reserved.                        
+  Unpublished-rights reserved under US copyright laws.
+  This program is protected by law and is subject to the 
+  terms and conditions of the license agreement found in:
+    C:\synopsys\Hspice_A-2008.03\license.warn
+  Use of this program is your acceptance to be bound by this 
+  license agreement. HSPICE is the trademark of Synopsys, Inc.
+  Input File: \\mac\home\desktop\malikeh\ut-courses\digital_elec\ca3\dominologic
+ Init: read install configuration file: C:\synopsys\Hspice_A-2008.03\meta.cfg
+ Init: hspice initialization file: C:\synopsys\Hspice_A-2008.03\hspice.ini
+
+
+
+
+
+ ********* params*******
+ .param			lmin=45n
+ +vdd=1v
+ .global  vdd
+
+ ****** sources ******
+ vsupply			vs		0		dc		  vdd
+ vina				va		0		pulse		vdd 0 0n 500p 500p 2ns 4ns
+ vinx				vx		0		dc    1
+ vclk        _clk  0   pulse		vdd 0 0n 500p 500p 1ns 5ns
+
+ ****** subckt inverter ******
+ .subckt invertergate in  gnd  supply out
+ mp1				out		  gnd	 supply 	 supply		 pmos		l='lmin'		w='lmin'
+ mn1       out     in   gnd     gnd     nmos   l='lmin'    w='lmin*2'
+ .ends invertergate
+
+ ****** subckt and ******
+ .subckt andgate x y clk gnd  supply out
+ mp2				s		  clk	  supply 	supply	 	  pmos	  l='lmin'		w='lmin*2'
+ mn2       s   x     j    j     nmos   l='lmin'    w='lmin'
+ mn3       j     y     k     k       nmos   l='lmin'    w='lmin'
+ mn4       k     clk     gnd    gnd    nmos   l='lmin'    w='lmin'
+
+ mp3				s		  out	  supply 	supply	 	   pmos	  l='lmin'		w='lmin*2'
+ xinv3     s gnd  supply out invertergate
+ .ends andgate
+
+ ****** main circuit *****
+ xinv1  vx 0  vs xb invertergate
+ xinv2  xb 0  vs z invertergate
+ xand1  z va _clk 0  vs y1 andgate
+ xand2  xb va _clk 0  vs y2 andgate
+
+
+
+ *********type of analysis***
+ .measure tran tphl
+ + trig v(va) val = '0.5*vdd'  rise = 1
+ + targ v(y1) val = '0.5*vdd'  rise = 1
+
+ .measure tran tplh
+ + trig v(va) val = '0.5*vdd'  fall = 1
+ + targ v(y1) val = '0.5*vdd'  fall = 1
+
+ .measure tran tpd  param = '(tphl + tplh)/2'
+
+ .measure tran avgpower avg power
+ .measure tran pdp param = 'tpd * avgpower'
+
+
+ .tran  0.1ns  20ns
+ .op
+ .end
+
+ ***********************************************************************
+ ** runlvl is invoked, you can disable it by:
+      a) Add option runlvl=0 to your current simulation job.
+      b) Copy $installdir/hspice.ini to your HOME directory and
+         customize it by adding option runlvl=0, which disables
+         it for all of your simulation jobs.
+      c) Re-invoke $installdir/bin/config program and unselect the
+         option runlvl setting in box 'hspice.ini' which disables
+         it for whole group simulation jobs.
+
+ ** runlvl is invoked, some options are ignored or automatically set:
+      Options below are automatically set(user setting will overwrite them):
+      if runlvl=6,            .option bypass=0
+      if runlvl=[1|2|3|4|5],  .option bypass=2
+
+      Options below are ignored, they are replaced by automated algorithms:
+        lvltim    dvdt      ft    fast   trtol  absvar  relvar
+          relq  chgtol    dvtr    imin    itl3    rmax
+
+ ** runlvl is invoked, actual option value used by HSPICE are:
+       runlvl= 3       bypass= 2      mbypass=   2.00   bytol= 100.00u
+ ***********************************************************************
+
+1****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+ ******  
+ ******** digital electronics, multiplexer design*******                        
+  ******  circuit name directory                                                
+ ******  
+ circuit number to circuit name directory
+   number circuitname                     definition         multiplier
+        0 main circuit
+        1 xinv1.                          invertergate       1.00 
+        2 xinv2.                          invertergate       1.00 
+        3 xand1.                          andgate            1.00 
+        4 xand2.                          andgate            1.00 
+        5 xand1.xinv3.                    invertergate       1.00 
+        6 xand2.xinv3.                    invertergate       1.00 
+
+ **warning** dc voltage reset to initial transient source value
+             in source        0:vina                new dc=  0.1000D+01
+
+
+ **warning** dc voltage reset to initial transient source value
+             in source        0:vclk                new dc=  0.1000D+01
+
+ ** warning** associated with encrypted blocks were suppressed
+
+ 
+      
+  Opening plot unit= 79
+ file=\\mac\home\desktop\malikeh\ut-courses\digital_elec\ca3\dominologic.pa0   
+
+1****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+ ******  
+ ******** digital electronics, multiplexer design*******                        
+  ******  operating point information      tnom=  25.000 temp=  25.000          
+ ******  
+ ***** operating point status is all       simulation time is     0.     
+    node    =voltage      node    =voltage      node    =voltage
+
+ +0:_clk    =   1.0000  0:va      =   1.0000  0:vs      =   1.0000 
+ +0:vx      =   1.0000  0:xb      = 101.8525m 0:y1      = 115.6421m
+ +0:y2      = 882.4337m 0:z       = 999.7623m 3:j       = 303.1805m
+ +3:k       = 137.2412m 3:s       = 865.1512m 4:j       =  13.7544u
+ +4:k       =   6.9140u 4:s       = 421.0460m
+
+
+ ****  voltage sources
+
+ subckt                                              
+ element  0:vsupply  0:vina     0:vinx     0:vclk    
+  volts      1.0000     1.0000     1.0000     1.0000 
+  current -100.3767u  -18.2050p  -29.9836p  -36.6480p
+  power    100.3767u   18.2050p   29.9836p   36.6480p
+
+     total voltage source power dissipation=  100.3768u       watts
+
+
+
+
+ **** mosfets
+
+
+ subckt   xinv1      xinv1      xinv2      xinv2      xand1      xand1     
+ element  1:mp1      1:mn1      2:mp1      2:mn1      3:mp2      3:mn2     
+ model    0:pmos     0:nmos     0:pmos     0:nmos     0:pmos     0:nmos    
+ region     Saturati     Linear     Linear     Cutoff     Cutoff   Saturati
+  id       -34.6551u   34.6552u  -23.1735n   23.1370n   -5.3179p   21.1099u
+  ibs     -1.461e-23  1.460e-23 -1.977e-24  9.517e-25 -1.357e-25  6.889e-25
+  ibd      908.1475f -111.6627f  329.8448a   -1.0098p  144.7962f -571.9707f
+  vgs       -1.0000     1.0000    -1.0000   101.8525m    0.       696.5818m
+  vds     -898.1475m  101.8525m -237.7374u  999.7623m -134.8488m  561.9707m
+  vbs        0.         0.         0.         0.         0.         0.     
+  vth     -351.3918m  453.8461m -487.5610m  339.8047m -467.1471m  395.4074m
+  vdsat   -443.1319m  342.1277m -379.4591m   39.4512m  -45.1165m  202.8914m
+  vod     -648.6082m  546.1539m -512.4390m -237.9523m  467.1471m  301.1744m
+  beta     329.9922u    2.3182m  297.5318u    4.2715m  737.1014u    1.3478m
+  gam eff  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m
+  gm        63.8781u   21.6896u   23.8948n  592.1551n  149.9796p   79.2886u
+  gds       16.2210u  299.6992u   97.4517u   83.6458n   27.4964p   13.1731u
+  gmb       14.2979u    7.9297u    8.1823n  141.1117n   38.3864p   18.2904u
+  cdtot     32.9906a   99.2213a   58.5030a   57.1313a   71.3030a   34.7030a
+  cgtot     49.9764a  119.3736a   52.8845a   65.6986a   70.0344a   49.1107a
+  cstot     63.0711a  128.9197a   55.1984a  107.3747a  104.3867a   62.2208a
+  cbtot     57.2575a  122.8741a   62.2838a  116.4783a  124.2376a   58.6127a
+  cgs       35.7374a   76.9521a   29.8789a   35.5227a   32.5310a   33.8455a
+  cgd       13.4618a   41.8082a   22.5239a   21.3432a   28.2124a   14.2907a
+
+
+
+ subckt   xand1      xand1      xand1      xand2      xand2      xand2     
+ element  3:mn3      3:mn4      3:mp3      4:mp2      4:mn2      4:mn3     
+ model    0:nmos     0:nmos     0:pmos     0:pmos     0:nmos     0:nmos    
+ region       Linear     Linear     Linear     Cutoff     Cutoff     Linear
+  id        21.1099u   21.1099u  -21.1099u  -44.4568p    1.2415n    1.2473n
+  ibs      7.212e-25  6.900e-24 -8.239e-25 -5.524e-25  4.042e-25  5.270e-24
+  ibd     -175.9236f -147.1933f  144.7962f  588.9540f -431.0322f   -9.5025a
+  vgs      862.7588m    1.0000  -884.3579m    0.       101.8387m  999.9931m
+  vds      165.9393m  137.2412m -134.8488m -578.9540m  421.0322m    6.8404u
+  vbs        0.         0.         0.         0.         0.         0.     
+  vth      445.7065m  449.3514m -467.1471m -399.7979m  413.3076m  466.7813m
+  vdsat    265.7752m  334.5612m -324.3197m  -44.8190m   39.9057m  327.0641m
+  vod      417.0523m  550.6486m -417.2108m  399.7979m -311.4689m  533.2118m
+  beta       1.1318m    1.0182m  726.5116u  819.5100u    1.6405m    1.0028m
+  gam eff  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m
+  gm        31.0479u   16.0392u   38.6151u    1.2497n   32.8304n  558.8358p
+  gds       88.4826u  126.4690u  129.5653u  208.2327p    4.5570n  182.3389u
+  gmb        8.7913u    5.5231u   10.4893u  307.8364p    8.2037n  259.3543p
+  cdtot     39.2211a   42.3207a   85.5465a   60.9418a   30.7278a   60.1242a
+  cgtot     51.4053a   52.2000a  116.3787a   64.0913a   30.3660a   53.2235a
+  cstot     62.4335a   62.0063a  131.7853a  104.3867a   51.4648a   54.5954a
+  cbtot     60.5284a   60.8197a  121.6411a  119.8195a   60.0611a   62.4129a
+  cgs       34.5673a   34.5699a   78.3866a   32.5310a   15.5371a   29.5144a
+  cgd       16.0942a   17.0498a   36.7431a   22.2692a   10.7119a   23.3521a
+
+
+
+ subckt   xand2      xand2      xand1.xinv xand1.xinv xand2.xinv xand2.xinv
+ element  4:mn4      4:mp3      5:mp1      5:mn1      6:mp1      6:mn1     
+ model    0:nmos     0:pmos     0:pmos     0:nmos     0:pmos     0:nmos    
+ region       Linear     Cutoff   Saturati     Linear     Linear   Saturati
+  id         1.2607n   -1.1808n  -34.4314u   34.4315u  -10.1556u   10.1556u
+  ibs      5.271e-24 -5.524e-25 -1.421e-23  1.324e-24 -2.681e-24  9.478e-25
+  ibd       -9.6048a  588.9540f  894.3579f -125.5312f  127.4634f -892.4337f
+  vgs        1.0000  -117.5663m   -1.0000   865.1512m   -1.0000   421.0460m
+  vds        6.9140u -578.9540m -884.3579m  115.6421m -117.5663m  882.4337m
+  vbs        0.         0.         0.         0.         0.         0.     
+  vth      466.7813m -399.7979m -353.4830m  452.0947m -469.7680m  354.7063m
+  vdsat    327.0677m  -44.8605m -442.2021m  271.0518m -388.1745m   85.7628m
+  vod      533.2187m  282.2316m -646.5170m  413.0566m -530.2320m   66.3397m
+  beta       1.0028m  819.5818u  329.4695u    2.5674m  301.6107u    3.9206m
+  gam eff  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m  400.0000m
+  gm       564.8426p   32.5219n   63.7221u   39.4607u   12.4739u  118.4925u
+  gds      182.3395u    5.4289n   16.2294u  242.6549u   75.6876u   17.1766u
+  gmb      262.1448p    7.4452n   14.2650u   11.9959u    3.8227u   25.7054u
+  cdtot     60.1243a   61.6483a   33.1738a   88.6338a   43.3746a   58.6888a
+  cgtot     53.2235a   67.4198a   50.1093a  117.3682a   52.0014a   87.7158a
+  cstot     54.5954a  107.6606a   63.0675a  131.3467a   61.6077a  124.6117a
+  cbtot     62.4129a  119.1676a   57.2986a  122.2862a   60.8484a  115.9090a
+  cgs       29.5144a   35.8052a   35.7325a   78.0348a   34.2713a   62.9566a
+  cgd       23.3521a   22.9758a   13.6013a   38.3081a   17.0964a   20.7851a
+
+
+
+ ******  
+ ******** digital electronics, multiplexer design*******                        
+  ******  transient analysis               tnom=  25.000 temp=  25.000          
+ ******  
+   tphl= failed       targ= not found    trig=  2.7500E-09
+   tplh= failed       targ= not found    trig=  2.5000E-10
+   tpd= failed                         measure parameter failed
+   avgpower=  1.0876E-04  from=  0.0000E+00     to=  2.0000E-08
+   pdp= failed                         measure parameter failed
+
+          ***** job concluded
+1****** HSPICE -- A-2008.03 32-BIT (Feb 26 2008) winnt ******                   
+ ******  
+ ******** digital electronics, multiplexer design*******                        
+  ******  job statistics summary           tnom=  25.000 temp=  25.000          
+ ******  
+
+           total memory used        211 kbytes
+
+  # nodes =      87 # elements=      22
+  # diodes=       0 # bjts    =       0 # jfets   =       0 # mosfets =      18
+  # va device =       0
+
+    analysis           time    # points   tot. iter  conv.iter
+
+    op point           0.01           1          15
+    transient          0.12         201         630         213 rev=        19
+    readin             0.01
+    errchk             0.01
+    setup              0.01
+    output             0.00
+           total cpu time          0.19 seconds
+           total elapsed time         1 seconds
+               job started at  04:05:11 11/25/2018
+               job ended   at  04:05:11 11/25/2018
+
+
+ Init: hspice initialization file: C:\synopsys\Hspice_A-2008.03\hspice.ini

@@ -1,0 +1,27 @@
+* "simulator" "HSPICE" 
+* "version" "A-2008.03 32-BIT"
+* "format" "HSP"
+* "rundate" "04:05:11 11/25/2018 "
+* "netlist" "\\mac\home\desktop\malikeh\ut-courses\digital_elec\ca3\dominologic.sp "
+* "runtitle" "******** digital electronics, multiplexer design*******"
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ _clk =   1.0000        
++ va =   1.0000        
++ vs =   1.0000        
++ vx =   1.0000        
++ xb = 101.8525m       
++ y1 = 115.6421m       
++ y2 = 882.4337m       
++ z = 999.7623m       
++ xand1.j = 303.1805m       
++ xand1.k = 137.2412m       
++ xand1.s = 865.1512m       
++ xand2.j =  13.7544u       
++ xand2.k =   6.9140u       
++ xand2.s = 421.0460m       
+***   END: Saved Operating Point ***                     

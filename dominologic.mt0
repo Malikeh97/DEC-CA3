@@ -1,0 +1,6 @@
+$DATA1 SOURCE='HSPICE' VERSION='A-2008.03 32-BIT'
+.TITLE '******** digital electronics, multiplexer design*******'
+ tphl             tplh             tpd              avgpower          
+ pdp              temper           alter#            
+    failed           failed           failed         1.088e-04        
+    failed          25.0000           1.0000         

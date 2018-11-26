@@ -1,0 +1,24 @@
+* "simulator" "HSPICE" 
+* "version" "A-2008.03 32-BIT"
+* "format" "HSP"
+* "rundate" "01:02:05 11/25/2018 "
+* "netlist" "\\mac\home\desktop\malikeh\ut-courses\digital_elec\ca3\staticcmos.sp "
+* "runtitle" "******** digital electronics, multiplexer design*******"
+* time =    0.            
+* temperature =   25.0000        
+*** BEGIN: Saved Operating Point ***                     
+.option 
++ gmindc=   1.0000p       
+.nodeset
++ va =   1.0000        
++ vs =   1.0000        
++ vx =   1.0000        
++ xb =   3.6411u       
++ y1 = 999.9964m       
++ y2 =   2.2467u       
++ z = 999.9960m       
++ xand1.k =   5.0405u       
++ xand1.s =   2.5605u       
++ xand2.k = 999.9943m       
++ xand2.s = 890.5471m       
+***   END: Saved Operating Point ***                     
